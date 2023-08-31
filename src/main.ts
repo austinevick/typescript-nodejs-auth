@@ -1,7 +1,8 @@
 import express from "express";
 import { connectToDB } from "./utils/db";
 import dotenv from 'dotenv';
-import UserRouter from "./modules/user/user.route";
+import userRoute from "./modules/user/user.route";
+import authRoute from "./modules/auth/auth.route";
 dotenv.config();
 const app = express();
 
@@ -10,7 +11,8 @@ const port = 3000
 app.use(express.json())
 app.use(express.raw())
 app.use(express.urlencoded({ extended: true }))
-app.use("/api/v1/users", UserRouter)
+app.use("/api/v1/users", userRoute)
+app.use("/api/v1/auth", authRoute)
 
 const server = app.listen(port, async () => {
     await connectToDB();

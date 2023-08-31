@@ -1,9 +1,9 @@
 import express from 'express';
 import { registerUser } from './user.controller';
-const UserRouter = express.Router();
+const userRoute = express.Router();
 
-UserRouter.post('/', registerUser)
+userRoute.post('/', registerUser)
 
 
 
-export default UserRouter;
+export default userRoute;

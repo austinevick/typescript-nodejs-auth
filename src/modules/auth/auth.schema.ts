@@ -11,3 +11,5 @@ export const loginSchema = {
         })
     })
 }
+
+export type LoginBody = TypeOf<typeof loginSchema.body>;
