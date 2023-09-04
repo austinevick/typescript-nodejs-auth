@@ -20,7 +20,7 @@ export class User {
     public password: string
 
     public async comparePassword(password: string): Promise<boolean> {
-        return argon2.verify(this.password, password);
+        return await argon2.verify(this.password, password);
     }
 }
 

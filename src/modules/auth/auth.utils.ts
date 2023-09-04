@@ -4,7 +4,7 @@ dotenv.config();
 
 
 export function signJwt(payload: string | Buffer | object) {
-    return jwt.sign(payload, `${process.env.JWT_SECRET}`, { expiresIn: '1d' })
+    return jwt.sign(payload, `${process.env.JWT_SECRET}`, { expiresIn: '7d' })
 }
 
 export function verifyJwt(token: string) {

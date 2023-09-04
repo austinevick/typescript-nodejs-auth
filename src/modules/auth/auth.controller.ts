@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { findUserByEmail } from '../user/user.service';
+import { findUserAndOmitPwd, findUserByEmail } from '../user/user.service';
 import { signJwt } from './auth.utils';
 import omit from '../../helpers/omit';
 import { LoginBody } from './auth.schema';
@@ -7,6 +7,7 @@ import { LoginBody } from './auth.schema';
 
 export async function loginUser(req: Request<{}, {}, LoginBody>, res: Response) {
     const { email, password } = req.body
+
     try {
         const user = await findUserByEmail(email);
         if (!user || !user.comparePassword(password)) {
@@ -15,6 +16,7 @@ export async function loginUser(req: Request<{}, {}, LoginBody>, res: Response) 
                 message: "Invalid email or password"
             });
         }
+        const data = await findUserAndOmitPwd(user.email)
         const payload = omit(user.toJSON(), 'password');
         const jwt = signJwt(payload);
 
@@ -30,7 +32,7 @@ export async function loginUser(req: Request<{}, {}, LoginBody>, res: Response) 
         return res.status(200).json({
             status: 200,
             message: 'User created',
-            data: user,
+            data: data,
             token: jwt
         })
     } catch (error: any) {

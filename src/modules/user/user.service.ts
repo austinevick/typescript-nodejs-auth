@@ -5,5 +5,10 @@ export async function createUser(user: Omit<User, 'comparePassword'>) {
 }
 
 export async function findUserByEmail(email: User['email']) {
-    return UserModel.findOne({ email }).select('-password')
+    return UserModel.findOne({ email })
+}
+
+export async function findUserAndOmitPwd(email: string) {
+    return await UserModel.findOne({ email: email }).select('-password')
+
 }
